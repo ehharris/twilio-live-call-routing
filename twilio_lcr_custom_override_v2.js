@@ -599,15 +599,6 @@ function buildOnCallList (twiml, context, payload) {
 
         resolve(twiml);
       })
-      .catch(err => {
-        console.log(err);
-        twiml.say(
-          {voice},
-          `${messages.errorGettingPhoneNumbers}`
-        );
-
-        resolve(twiml);
-      });
     })
     .catch(err => {
       console.log(err);
@@ -615,7 +606,6 @@ function buildOnCallList (twiml, context, payload) {
         {voice},
         `${messages.errorGettingPhoneNumbers}`
       );
-
       resolve(twiml);
     });
   });
@@ -675,14 +665,14 @@ function getPhoneNumbers (context, escPolicyUrl, escPolicyName, overrides1) {
       schedule.forEach((rotation) => {
         if (overrides1.size > 0){
           if (!(_.isUndefined(rotation.onCallUser)) && (!(overrides1.has(rotation.rotationName)))){
-            console.log("no-override1");
+            //console.log("no-override1");
             onCallArray.push(rotation.onCallUser.username);        
           } else if (overrides1.has(rotation.rotationName)) { 
             console.log("override");
             onCallArray.push(overrides1.get(rotation.rotationName));
           }
         } else if (!(_.isUndefined(rotation.onCallUser))) {
-          console.log("no-override2");
+          //console.log("no-override2");
           onCallArray.push(rotation.onCallUser.username);
         }
       });
@@ -749,7 +739,7 @@ function getActiveOverrides(context, escUrl, escPolicyName){
       // CUSTOM BEHAVIOR: Determines active overrides for each EP, passes on first rotation used in EP for association in case user is overriding for a "Secondary" rotation that's unaccounted for
       let overridePairs = new Map();
       for (let schedule in schedulesArg){
-        console.log(schedulesArg[schedule]);
+        //console.log(schedulesArg[schedule]);
         for (let schedule2 in schedulesArg[schedule]){
           if (!(_.isUndefined(schedulesArg[schedule][schedule2].overrideOnCallUser))) {  
            overridePairs.set(schedulesArg[schedule][schedule2].rotationName, schedulesArg[schedule][schedule2].overrideOnCallUser.username);
